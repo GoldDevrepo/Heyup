@@ -1,0 +1,89 @@
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/!svn/ver/2051/dicu/app/webroot/phpmongodb/application/views/Collection
+END
+_create_index.php
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/!svn/ver/2051/dicu/app/webroot/phpmongodb/application/views/Collection/_create_index.php
+END
+_list.php
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/!svn/ver/2051/dicu/app/webroot/phpmongodb/application/views/Collection/_list.php
+END
+import.php
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/!svn/ver/2051/dicu/app/webroot/phpmongodb/application/views/Collection/import.php
+END
+record.php
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/!svn/ver/2051/dicu/app/webroot/phpmongodb/application/views/Collection/record.php
+END
+indexes.php
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/!svn/ver/2051/dicu/app/webroot/phpmongodb/application/views/Collection/indexes.php
+END
+export.php
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/!svn/ver/2051/dicu/app/webroot/phpmongodb/application/views/Collection/export.php
+END
+_create.php
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/!svn/ver/2051/dicu/app/webroot/phpmongodb/application/views/Collection/_create.php
+END
+_form.php
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/!svn/ver/2051/dicu/app/webroot/phpmongodb/application/views/Collection/_form.php
+END
+_insert.php
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/!svn/ver/2051/dicu/app/webroot/phpmongodb/application/views/Collection/_insert.php
+END
+_menu.php
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/!svn/ver/2051/dicu/app/webroot/phpmongodb/application/views/Collection/_menu.php
+END
+insert.php
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/!svn/ver/2051/dicu/app/webroot/phpmongodb/application/views/Collection/insert.php
+END
+edit.php
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/!svn/ver/2051/dicu/app/webroot/phpmongodb/application/views/Collection/edit.php
+END
+search.php
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/!svn/ver/2051/dicu/app/webroot/phpmongodb/application/views/Collection/search.php
+END
+index.php
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/!svn/ver/2051/dicu/app/webroot/phpmongodb/application/views/Collection/index.php
+END

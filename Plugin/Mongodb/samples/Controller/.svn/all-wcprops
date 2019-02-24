@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/!svn/ver/2051/dicu/app/Plugin/Mongodb/samples/Controller
+END
+PostsController.php
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/!svn/ver/2051/dicu/app/Plugin/Mongodb/samples/Controller/PostsController.php
+END
+SubdocumentsController.php
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/!svn/ver/2051/dicu/app/Plugin/Mongodb/samples/Controller/SubdocumentsController.php
+END
+GeosController.php
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/!svn/ver/2051/dicu/app/Plugin/Mongodb/samples/Controller/GeosController.php
+END

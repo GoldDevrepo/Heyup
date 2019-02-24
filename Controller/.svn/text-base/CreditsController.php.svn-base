@@ -1,0 +1,206 @@
+<?php
+App::uses('AppController', 'Controller');
+/**
+ * Credits Controller
+ *
+ * @property Credit $Credit
+ * @property PaginatorComponent $Paginator
+ * @property SessionComponent $Session
+ */
+class CreditsController extends AppController {
+
+/**
+ * Components
+ *
+ * @var array
+ */
+	public $components = array('Paginator', 'Session');
+
+
+	public function credit_list($user_id){
+		$this->autoRender = false;
+		header('Content-Type: application/json');
+		$credit_list = $this->Credit->find('all');
+		$credit_list = Hash::extract($credit_list, '{n}.Credit');
+		$this->loadModel('Transaction');
+		$remaining_credit = $this->Transaction->query("SELECT SUM(credit) FROM transactions WHERE user_id = ".$user_id.""); 
+		if(!empty($credit_list))
+			die(json_encode(array('success' => true, 'credit_list' => $credit_list, 'current_credit' => $remaining_credit[0][0]['SUM(credit)'])));
+		else
+			die(json_encode(array('success' => false, 'msg' => 'Empty Credit List.')));
+	}
+
+/**
+ * index method
+ *
+ * @return void
+ */
+	public function index() {
+		$this->Credit->recursive = 0;
+		$this->set('credits', $this->Paginator->paginate());
+	}
+
+/**
+ * view method
+ *
+ * @throws NotFoundException
+ * @param string $id
+ * @return void
+ */
+	public function view($id = null) {
+		if (!$this->Credit->exists($id)) {
+			throw new NotFoundException(__('Invalid credit'));
+		}
+		$options = array('conditions' => array('Credit.' . $this->Credit->primaryKey => $id));
+		$this->set('credit', $this->Credit->find('first', $options));
+	}
+
+/**
+ * add method
+ *
+ * @return void
+ */
+	public function add() {
+		if ($this->request->is('post')) {
+			$this->Credit->create();
+			if ($this->Credit->save($this->request->data)) {
+				$this->Session->setFlash(__('The credit has been saved.'));
+				return $this->redirect(array('action' => 'index'));
+			} else {
+				$this->Session->setFlash(__('The credit could not be saved. Please, try again.'));
+			}
+		}
+	}
+
+/**
+ * edit method
+ *
+ * @throws NotFoundException
+ * @param string $id
+ * @return void
+ */
+	public function edit($id = null) {
+		if (!$this->Credit->exists($id)) {
+			throw new NotFoundException(__('Invalid credit'));
+		}
+		if ($this->request->is(array('post', 'put'))) {
+			if ($this->Credit->save($this->request->data)) {
+				$this->Session->setFlash(__('The credit has been saved.'));
+				return $this->redirect(array('action' => 'index'));
+			} else {
+				$this->Session->setFlash(__('The credit could not be saved. Please, try again.'));
+			}
+		} else {
+			$options = array('conditions' => array('Credit.' . $this->Credit->primaryKey => $id));
+			$this->request->data = $this->Credit->find('first', $options);
+		}
+	}
+
+/**
+ * delete method
+ *
+ * @throws NotFoundException
+ * @param string $id
+ * @return void
+ */
+	public function delete($id = null) {
+		$this->Credit->id = $id;
+		if (!$this->Credit->exists()) {
+			throw new NotFoundException(__('Invalid credit'));
+		}
+		$this->request->allowMethod('post', 'delete');
+		if ($this->Credit->delete()) {
+			$this->Session->setFlash(__('The credit has been deleted.'));
+		} else {
+			$this->Session->setFlash(__('The credit could not be deleted. Please, try again.'));
+		}
+		return $this->redirect(array('action' => 'index'));
+	}
+
+/**
+ * admin_index method
+ *
+ * @return void
+ */
+	public function admin_index() {
+		$this->Credit->recursive = 0;
+		$this->set('credits', $this->Paginator->paginate());
+	}
+
+/**
+ * admin_view method
+ *
+ * @throws NotFoundException
+ * @param string $id
+ * @return void
+ */
+	public function admin_view($id = null) {
+		if (!$this->Credit->exists($id)) {
+			throw new NotFoundException(__('Invalid credit'));
+		}
+		$options = array('conditions' => array('Credit.' . $this->Credit->primaryKey => $id));
+		$this->set('credit', $this->Credit->find('first', $options));
+	}
+
+/**
+ * admin_add method
+ *
+ * @return void
+ */
+	public function admin_add() {
+		if ($this->request->is('post')) {
+			$this->Credit->create();
+			if ($this->Credit->save($this->request->data)) {
+				$this->Session->setFlash(__('The credit has been saved.'));
+				return $this->redirect(array('action' => 'index'));
+			} else {
+				$this->Session->setFlash(__('The credit could not be saved. Please, try again.'));
+			}
+		}
+	}
+
+/**
+ * admin_edit method
+ *
+ * @throws NotFoundException
+ * @param string $id
+ * @return void
+ */
+	public function admin_edit($id = null) {
+		if (!$this->Credit->exists($id)) {
+			throw new NotFoundException(__('Invalid credit'));
+		}
+		if ($this->request->is(array('post', 'put'))) {
+			if ($this->Credit->save($this->request->data)) {
+				$this->Session->setFlash(__('The credit has been saved.'));
+				return $this->redirect(array('action' => 'index'));
+			} else {
+				$this->Session->setFlash(__('The credit could not be saved. Please, try again.'));
+			}
+		} else {
+			$options = array('conditions' => array('Credit.' . $this->Credit->primaryKey => $id));
+			$this->request->data = $this->Credit->find('first', $options);
+		}
+	}
+
+/**
+ * admin_delete method
+ *
+ * @throws NotFoundException
+ * @param string $id
+ * @return void
+ */
+	public function admin_delete($id = null) {
+		$this->Credit->id = $id;
+		if (!$this->Credit->exists()) {
+			throw new NotFoundException(__('Invalid credit'));
+		}
+		$this->request->allowMethod('post', 'delete');
+		if ($this->Credit->delete()) {
+			$this->Session->setFlash(__('The credit has been deleted.'));
+		} else {
+			$this->Session->setFlash(__('The credit could not be deleted. Please, try again.'));
+		}
+		return $this->redirect(array('action' => 'index'));
+	}
+}

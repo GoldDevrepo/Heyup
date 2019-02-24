@@ -1,0 +1,65 @@
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/!svn/ver/2051/dicu/app/View/Notifications
+END
+view.ctp
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/!svn/ver/2051/dicu/app/View/Notifications/view.ctp
+END
+admin_edit.ctp
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/!svn/ver/2051/dicu/app/View/Notifications/admin_edit.ctp
+END
+admin_index.ctp
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/!svn/ver/2051/dicu/app/View/Notifications/admin_index.ctp
+END
+admin_add.ctp
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/!svn/ver/2051/dicu/app/View/Notifications/admin_add.ctp
+END
+notification_list.ctp
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/!svn/ver/2051/dicu/app/View/Notifications/notification_list.ctp
+END
+admin_view.ctp
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/!svn/ver/2051/dicu/app/View/Notifications/admin_view.ctp
+END
+edit.ctp
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/!svn/ver/2051/dicu/app/View/Notifications/edit.ctp
+END
+index.ctp
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/!svn/ver/2051/dicu/app/View/Notifications/index.ctp
+END
+single_notification.ctp
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/!svn/ver/2051/dicu/app/View/Notifications/single_notification.ctp
+END
+add.ctp
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/!svn/ver/2051/dicu/app/View/Notifications/add.ctp
+END

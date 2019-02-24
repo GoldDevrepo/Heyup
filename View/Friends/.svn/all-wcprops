@@ -1,0 +1,59 @@
+K 25
+svn:wc:ra_dav:version-url
+V 40
+/svn/!svn/ver/2051/dicu/app/View/Friends
+END
+view.ctp
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/!svn/ver/2051/dicu/app/View/Friends/view.ctp
+END
+my_friend.ctp
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/!svn/ver/2051/dicu/app/View/Friends/my_friend.ctp
+END
+admin_edit.ctp
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/!svn/ver/2051/dicu/app/View/Friends/admin_edit.ctp
+END
+admin_index.ctp
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/!svn/ver/2051/dicu/app/View/Friends/admin_index.ctp
+END
+admin_add.ctp
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/!svn/ver/2051/dicu/app/View/Friends/admin_add.ctp
+END
+admin_view.ctp
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/!svn/ver/2051/dicu/app/View/Friends/admin_view.ctp
+END
+edit.ctp
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/!svn/ver/2051/dicu/app/View/Friends/edit.ctp
+END
+index.ctp
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/!svn/ver/2051/dicu/app/View/Friends/index.ctp
+END
+add.ctp
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/!svn/ver/2051/dicu/app/View/Friends/add.ctp
+END

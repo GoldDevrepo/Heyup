@@ -1,0 +1,2 @@
+<footer id="footer"><a href="<?php echo HTTP_SERVER; ?>"><?php echo WEBSITE_NAME; ?></a> &copy; 2009-<?php echo date('Y');?> All Rights Reserved.<br />Version <?php echo WEBSITE_VERSION; ?></footer></div>
+</body></html>

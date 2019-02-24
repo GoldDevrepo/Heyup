@@ -1,0 +1,270 @@
+<?php
+App::uses('AppController', 'Controller');
+/**
+ * Bumps Controller
+ *
+ * @property Bump $Bump
+ * @property PaginatorComponent $Paginator
+ * @property SessionComponent $Session
+ */
+class BumpsController extends AppController {
+
+/**
+ * Components
+ *
+ * @var array
+ */
+	public $components = array('Paginator', 'Session');
+
+/**
+ * admin_index method
+ *
+ * @return void
+ */
+	public function admin_index() {
+		$this->Bump->recursive = 0;
+		$this->set('bumps', $this->Paginator->paginate());
+	}
+
+/**
+ * admin_view method
+ *
+ * @throws NotFoundException
+ * @param string $id
+ * @return void
+ */
+	public function admin_view($id = null) {
+		if (!$this->Bump->exists($id)) {
+			throw new NotFoundException(__('Invalid bump'));
+		}
+		$options = array('conditions' => array('Bump.' . $this->Bump->primaryKey => $id));
+		$this->set('bump', $this->Bump->find('first', $options));
+	}
+
+/**
+ * admin_add method
+ *
+ * @return void
+ */
+	public function admin_add() {
+		if ($this->request->is('post')) {
+			$this->Bump->create();
+			if ($this->Bump->save($this->request->data)) {
+				$this->Session->setFlash(__('The bump has been saved.'));
+				return $this->redirect(array('action' => 'index'));
+			} else {
+				$this->Session->setFlash(__('The bump could not be saved. Please, try again.'));
+			}
+		}
+		$users = $this->Bump->User->find('list');
+		$this->set(compact('users'));
+	}
+
+/**
+ * admin_edit method
+ *
+ * @throws NotFoundException
+ * @param string $id
+ * @return void
+ */
+	public function admin_edit($id = null) {
+		if (!$this->Bump->exists($id)) {
+			throw new NotFoundException(__('Invalid bump'));
+		}
+		if ($this->request->is(array('post', 'put'))) {
+			if ($this->Bump->save($this->request->data)) {
+				$this->Session->setFlash(__('The bump has been saved.'));
+				return $this->redirect(array('action' => 'index'));
+			} else {
+				$this->Session->setFlash(__('The bump could not be saved. Please, try again.'));
+			}
+		} else {
+			$options = array('conditions' => array('Bump.' . $this->Bump->primaryKey => $id));
+			$this->request->data = $this->Bump->find('first', $options);
+		}
+		$users = $this->Bump->User->find('list');
+		$this->set(compact('users'));
+	}
+
+/**
+ * admin_delete method
+ *
+ * @throws NotFoundException
+ * @param string $id
+ * @return void
+ */
+	public function admin_delete($id = null) {
+		$this->Bump->id = $id;
+		if (!$this->Bump->exists()) {
+			throw new NotFoundException(__('Invalid bump'));
+		}
+		$this->request->allowMethod('post', 'delete');
+		if ($this->Bump->delete()) {
+			$this->Session->setFlash(__('The bump has been deleted.'));
+		} else {
+			$this->Session->setFlash(__('The bump could not be deleted. Please, try again.'));
+		}
+		return $this->redirect(array('action' => 'index'));
+	}
+
+	public function bumped_into($my_id, $location){
+		//print_r($location); exit;
+		$this->autoRender = false;
+		$my_lat_lng = $this->Bump->User->findById($my_id);
+		$bumped_users = $this->Bump->User->find('all', array(
+			'recursive' => -1,
+			'joins' => array(
+				array(
+					'table' => 'i_bumps',
+					'alias' => 'IBump',
+					'type' => 'LEFT',
+					'conditions' => array('IBump.myId' => $my_id, 'IBump.user_id = User.id')
+				),
+				array(
+					'table' => 'blocks',
+					'alias' => 'Block',
+					'type' => 'LEFT',
+					'conditions' => array(
+						'OR' =>array(
+							array('Block.userId1' => $my_id, 'Block.userId2 = User.id'),
+							array('Block.userId2' => $my_id, 'Block.userId1 = User.id'),
+						)
+					)
+				),
+			),
+			'conditions' => array(
+                '(ROUND((ACOS(
+                SIN(\'' . $my_lat_lng['User']['lat'] .'\' * PI() / 180)* SIN(User.lat * PI() / 180)+ 
+                COS(\'' . $my_lat_lng['User']['lat'] . '\' * PI() / 180)* COS(User.lat * PI() / 180)* COS(
+                (\'' . $my_lat_lng['User']['lng'] . '\' * PI() / 180)-(User.lng * PI() / 180))
+                ) *   '. 3959.0 .'),2)) <=' => 0.155343,
+				'User.id <>' => $my_id,
+				'IBump.myId IS NULL',
+				'OR' => array(
+					'Block.userId1 IS NULL', 'Block.userId2 IS NULL'
+					)
+				),
+			'fields' => array('User.id')
+		));
+		// 0.155343 mile = 250 meter by default
+		//print_r('expression');
+		//print_r($bumped_users); //exit;
+		$this->loadModel('Notification');
+		if(!empty($bumped_users)){
+			foreach ($bumped_users as $key => $b_user) {
+				//check if I bumps the user already or not, it not then send a push and a notification
+				$already_bumped = $this->Bump->find('first', array(
+					'conditions' => array('Bump.myId' => $my_id, 'Bump.user_id' => $bumped_users[$key]['User']['id'])
+				));
+				if(empty($already_bumped)){
+					$is_first = 1;
+				} else $is_first = 0;
+				$data = array(
+					'Bump' => array(
+						'myId' => $my_id, 
+						'user_id' => $bumped_users[$key]['User']['id'], 
+						'lat' => $my_lat_lng['User']['lat'], 
+						'lng' => $my_lat_lng['User']['lng'], 
+						'is_first' => $is_first,
+						'location' => $location));
+				$this->Bump->create();
+				$this->Bump->save($data);
+				//send a push notification
+				if(empty($already_bumped)){
+					$notification = array(
+		    			'Notification' => array(
+		    				'who' => $bumped_users[$key]['User']['id'],	    				
+		    				'whom' => $my_id,
+		    				'title' => "You've had a close encounter!",
+		    				'notification_type' => 'bump',
+		    				'is_read' => 0	 
+		    				)
+		    			);
+	    			$this->Notification->create();
+	    			$this->Notification->save($notification);
+	    			$this->_push("You've had a close encounter!", $my_id);
+				}
+			}
+		}
+
+	}
+
+	public function bumped_list($my_id){
+		header('Content-Type: application/json');
+		$this->autoRender = false;
+		$my_check = $this->Bump->User->findById($my_id);
+		if(!empty($my_check)){
+			$my_bumped_list = $this->Bump->query("SELECT *, COUNT(b.user_id) AS encounter,
+				(
+					DATE_FORMAT(NOW(), '%Y')- DATE_FORMAT(b.dob, '%Y')-(
+						DATE_FORMAT(NOW(), '00-%m-%d')< DATE_FORMAT(b.dob, '00-%m-%d')
+					)
+				)AS age
+			 FROM(
+				SELECT
+					Bump.user_id,
+					Bump.created,
+					Bump.location,
+					Bump.lat,
+					Bump.lng,
+					User.profile_img,
+					User.dob,
+					User.name,
+					Friend.is_accepted,
+					Friend.userId1,
+					Friend.userId2
+				FROM
+					bumps AS Bump
+				LEFT JOIN users AS User ON(
+					Bump.user_id = User.id
+				)
+				LEFT JOIN i_bumps AS IBump ON(
+					IBump.myId = '$my_id' AND IBump.user_id = User.id
+				)
+				LEFT JOIN friends AS Friend ON(
+					(Friend.userId1 = Bump.myId AND Friend.userId2 = Bump.user_id) 
+					OR 
+					(Friend.userId2 = Bump.myId AND Friend.userId1 = Bump.user_id)
+				)
+				WHERE
+					Bump.myId = '$my_id' AND IBump.myId IS NULL
+					ORDER BY Bump.created DESC
+				) AS b
+				GROUP BY b.user_id
+				ORDER BY b.created DESC");
+			foreach ($my_bumped_list as $key => $bumper_user) {
+				$my_bumped_list[$key]['user_id'] = $my_bumped_list[$key]['b']['user_id'];
+				$my_bumped_list[$key]['age'] = $my_bumped_list[$key][0]['age'];
+				$my_bumped_list[$key]['encounter'] = $my_bumped_list[$key][0]['encounter'];
+				$my_bumped_list[$key]['location'] = $my_bumped_list[$key]['b']['location'];
+				$my_bumped_list[$key]['lat'] = $my_bumped_list[$key]['b']['lat'];
+				$my_bumped_list[$key]['lng'] = $my_bumped_list[$key]['b']['lng'];
+				if(!empty($my_bumped_list[$key]['b']['name'])){
+					$my_bumped_list[$key]['name'] = $my_bumped_list[$key]['b']['name'];
+				} else $my_bumped_list[$key]['name'] = 'Anonymous';
+				if(!empty($my_bumped_list[$key]['b']['profile_img'])){
+					$my_bumped_list[$key]['profile_img'] = Router::url('/files/images/'.$my_bumped_list[$key]['b']['profile_img'], true);
+				}
+				App::uses('CakeTime', 'Utility');
+				$my_bumped_list[$key]['encounter_created'] = $my_bumped_list[$key]['b']['created'];
+				$time = CakeTime::timeAgoInWords($my_bumped_list[$key]['b']['created'], array('format' => 'F jS, Y'));
+				$search = array('minute', 'hours', 'hour', 'second');
+				$replace = array('min', 'h', 'h', 'sec');
+				$my_bumped_list[$key]['created'] = 'Seen '.str_replace($search, $replace, $time);
+				$me_requester = false;
+				if($my_bumped_list[$key]['b']['is_accepted'] == 1) $is_friend = true; 
+				elseif($my_bumped_list[$key]['b']['is_accepted'] == 2) {
+					$is_friend = 2; 
+					if($my_id == $my_bumped_list[$key]['b']['userId1'])
+						$me_requester = true;
+				}
+				elseif($my_bumped_list[$key]['b']['is_accepted'] == 0)  $is_friend = false;
+
+				$my_bumped_list[$key]['me_requester'] = $me_requester;
+				$my_bumped_list[$key]['is_friend'] = $is_friend;
+				unset($my_bumped_list[$key][0], $my_bumped_list[$key]['b']);
+			}
+			die(json_encode(array('success' =>true, 'my_bumped_list' => $my_bumped_list)));
+		} else die(json_encode(array('success' => false, 'msg' => 'Invalid User.')));
+	}
+}

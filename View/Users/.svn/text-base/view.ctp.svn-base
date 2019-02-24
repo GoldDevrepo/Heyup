@@ -1,0 +1,365 @@
+<div class="users view">
+<h2><?php echo __('User'); ?></h2>
+	<dl>
+		<dt><?php echo __('Id'); ?></dt>
+		<dd>
+			<?php echo h($user['User']['id']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Name'); ?></dt>
+		<dd>
+			<?php echo h($user['User']['name']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Dob'); ?></dt>
+		<dd>
+			<?php echo h($user['User']['dob']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Password'); ?></dt>
+		<dd>
+			<?php echo h($user['User']['password']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Lives In'); ?></dt>
+		<dd>
+			<?php echo h($user['User']['lives_in']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Tagline'); ?></dt>
+		<dd>
+			<?php echo h($user['User']['tagline']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Hair Color'); ?></dt>
+		<dd>
+			<?php echo h($user['User']['hair_color']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('About Me'); ?></dt>
+		<dd>
+			<?php echo h($user['User']['about_me']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Gender'); ?></dt>
+		<dd>
+			<?php echo h($user['User']['gender']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Email'); ?></dt>
+		<dd>
+			<?php echo h($user['User']['email']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Mobile No'); ?></dt>
+		<dd>
+			<?php echo h($user['User']['mobile_no']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Latest Activity'); ?></dt>
+		<dd>
+			<?php echo h($user['User']['latest_activity']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Is Message'); ?></dt>
+		<dd>
+			<?php echo h($user['User']['is_message']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Is Notify'); ?></dt>
+		<dd>
+			<?php echo h($user['User']['is_notify']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Is Friend Request'); ?></dt>
+		<dd>
+			<?php echo h($user['User']['is_friend_request']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Search Type'); ?></dt>
+		<dd>
+			<?php echo h($user['User']['search_type']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Sound'); ?></dt>
+		<dd>
+			<?php echo h($user['User']['sound']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Created'); ?></dt>
+		<dd>
+			<?php echo h($user['User']['created']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Modified'); ?></dt>
+		<dd>
+			<?php echo h($user['User']['modified']); ?>
+			&nbsp;
+		</dd>
+	</dl>
+</div>
+<div class="actions">
+	<h3><?php echo __('Actions'); ?></h3>
+	<ul>
+		<li><?php echo $this->Html->link(__('Edit User'), array('action' => 'edit', $user['User']['id'])); ?> </li>
+		<li><?php echo $this->Form->postLink(__('Delete User'), array('action' => 'delete', $user['User']['id']), null, __('Are you sure you want to delete # %s?', $user['User']['id'])); ?> </li>
+		<li><?php echo $this->Html->link(__('List Users'), array('action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(__('New User'), array('action' => 'add')); ?> </li>
+		<li><?php echo $this->Html->link(__('List Activities'), array('controller' => 'activities', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(__('New Activity'), array('controller' => 'activities', 'action' => 'add')); ?> </li>
+		<li><?php echo $this->Html->link(__('List Checkins'), array('controller' => 'checkins', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(__('New Checkin'), array('controller' => 'checkins', 'action' => 'add')); ?> </li>
+		<li><?php echo $this->Html->link(__('List Device Tokens'), array('controller' => 'device_tokens', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(__('New Device Token'), array('controller' => 'device_tokens', 'action' => 'add')); ?> </li>
+		<li><?php echo $this->Html->link(__('List Notifications'), array('controller' => 'notifications', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(__('New Notification'), array('controller' => 'notifications', 'action' => 'add')); ?> </li>
+		<li><?php echo $this->Html->link(__('List Pictures'), array('controller' => 'pictures', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(__('New Picture'), array('controller' => 'pictures', 'action' => 'add')); ?> </li>
+		<li><?php echo $this->Html->link(__('List Transactions'), array('controller' => 'transactions', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(__('New Transaction'), array('controller' => 'transactions', 'action' => 'add')); ?> </li>
+	</ul>
+</div>
+<div class="related">
+	<h3><?php echo __('Related Activities'); ?></h3>
+	<?php if (!empty($user['Activity'])): ?>
+	<table cellpadding = "0" cellspacing = "0">
+	<tr>
+		<th><?php echo __('Id'); ?></th>
+		<th><?php echo __('User Id'); ?></th>
+		<th><?php echo __('Description'); ?></th>
+		<th><?php echo __('Activity Type'); ?></th>
+		<th><?php echo __('Created'); ?></th>
+		<th><?php echo __('Modified'); ?></th>
+		<th class="actions"><?php echo __('Actions'); ?></th>
+	</tr>
+	<?php foreach ($user['Activity'] as $activity): ?>
+		<tr>
+			<td><?php echo $activity['id']; ?></td>
+			<td><?php echo $activity['user_id']; ?></td>
+			<td><?php echo $activity['description']; ?></td>
+			<td><?php echo $activity['activity_type']; ?></td>
+			<td><?php echo $activity['created']; ?></td>
+			<td><?php echo $activity['modified']; ?></td>
+			<td class="actions">
+				<?php echo $this->Html->link(__('View'), array('controller' => 'activities', 'action' => 'view', $activity['id'])); ?>
+				<?php echo $this->Html->link(__('Edit'), array('controller' => 'activities', 'action' => 'edit', $activity['id'])); ?>
+				<?php echo $this->Form->postLink(__('Delete'), array('controller' => 'activities', 'action' => 'delete', $activity['id']), null, __('Are you sure you want to delete # %s?', $activity['id'])); ?>
+			</td>
+		</tr>
+	<?php endforeach; ?>
+	</table>
+<?php endif; ?>
+
+	<div class="actions">
+		<ul>
+			<li><?php echo $this->Html->link(__('New Activity'), array('controller' => 'activities', 'action' => 'add')); ?> </li>
+		</ul>
+	</div>
+</div>
+<div class="related">
+	<h3><?php echo __('Related Checkins'); ?></h3>
+	<?php if (!empty($user['Checkin'])): ?>
+	<table cellpadding = "0" cellspacing = "0">
+	<tr>
+		<th><?php echo __('Id'); ?></th>
+		<th><?php echo __('User Id'); ?></th>
+		<th><?php echo __('Address'); ?></th>
+		<th><?php echo __('Lat'); ?></th>
+		<th><?php echo __('Lng'); ?></th>
+		<th><?php echo __('Timeline'); ?></th>
+		<th><?php echo __('Status'); ?></th>
+		<th><?php echo __('Created'); ?></th>
+		<th><?php echo __('Modified'); ?></th>
+		<th class="actions"><?php echo __('Actions'); ?></th>
+	</tr>
+	<?php foreach ($user['Checkin'] as $checkin): ?>
+		<tr>
+			<td><?php echo $checkin['id']; ?></td>
+			<td><?php echo $checkin['user_id']; ?></td>
+			<td><?php echo $checkin['address']; ?></td>
+			<td><?php echo $checkin['lat']; ?></td>
+			<td><?php echo $checkin['lng']; ?></td>
+			<td><?php echo $checkin['timeline']; ?></td>
+			<td><?php echo $checkin['status']; ?></td>
+			<td><?php echo $checkin['created']; ?></td>
+			<td><?php echo $checkin['modified']; ?></td>
+			<td class="actions">
+				<?php echo $this->Html->link(__('View'), array('controller' => 'checkins', 'action' => 'view', $checkin['id'])); ?>
+				<?php echo $this->Html->link(__('Edit'), array('controller' => 'checkins', 'action' => 'edit', $checkin['id'])); ?>
+				<?php echo $this->Form->postLink(__('Delete'), array('controller' => 'checkins', 'action' => 'delete', $checkin['id']), null, __('Are you sure you want to delete # %s?', $checkin['id'])); ?>
+			</td>
+		</tr>
+	<?php endforeach; ?>
+	</table>
+<?php endif; ?>
+
+	<div class="actions">
+		<ul>
+			<li><?php echo $this->Html->link(__('New Checkin'), array('controller' => 'checkins', 'action' => 'add')); ?> </li>
+		</ul>
+	</div>
+</div>
+<div class="related">
+	<h3><?php echo __('Related Device Tokens'); ?></h3>
+	<?php if (!empty($user['DeviceToken'])): ?>
+	<table cellpadding = "0" cellspacing = "0">
+	<tr>
+		<th><?php echo __('Id'); ?></th>
+		<th><?php echo __('User Id'); ?></th>
+		<th><?php echo __('Device Token'); ?></th>
+		<th><?php echo __('Device Type'); ?></th>
+		<th><?php echo __('Stage'); ?></th>
+		<th><?php echo __('Created'); ?></th>
+		<th><?php echo __('Modified'); ?></th>
+		<th class="actions"><?php echo __('Actions'); ?></th>
+	</tr>
+	<?php foreach ($user['DeviceToken'] as $deviceToken): ?>
+		<tr>
+			<td><?php echo $deviceToken['id']; ?></td>
+			<td><?php echo $deviceToken['user_id']; ?></td>
+			<td><?php echo $deviceToken['device_token']; ?></td>
+			<td><?php echo $deviceToken['device_type']; ?></td>
+			<td><?php echo $deviceToken['stage']; ?></td>
+			<td><?php echo $deviceToken['created']; ?></td>
+			<td><?php echo $deviceToken['modified']; ?></td>
+			<td class="actions">
+				<?php echo $this->Html->link(__('View'), array('controller' => 'device_tokens', 'action' => 'view', $deviceToken['id'])); ?>
+				<?php echo $this->Html->link(__('Edit'), array('controller' => 'device_tokens', 'action' => 'edit', $deviceToken['id'])); ?>
+				<?php echo $this->Form->postLink(__('Delete'), array('controller' => 'device_tokens', 'action' => 'delete', $deviceToken['id']), null, __('Are you sure you want to delete # %s?', $deviceToken['id'])); ?>
+			</td>
+		</tr>
+	<?php endforeach; ?>
+	</table>
+<?php endif; ?>
+
+	<div class="actions">
+		<ul>
+			<li><?php echo $this->Html->link(__('New Device Token'), array('controller' => 'device_tokens', 'action' => 'add')); ?> </li>
+		</ul>
+	</div>
+</div>
+<div class="related">
+	<h3><?php echo __('Related Notifications'); ?></h3>
+	<?php if (!empty($user['Notification'])): ?>
+	<table cellpadding = "0" cellspacing = "0">
+	<tr>
+		<th><?php echo __('Id'); ?></th>
+		<th><?php echo __('User Id'); ?></th>
+		<th><?php echo __('Title'); ?></th>
+		<th><?php echo __('Body'); ?></th>
+		<th><?php echo __('Notification Type'); ?></th>
+		<th><?php echo __('Is Read'); ?></th>
+		<th><?php echo __('Created'); ?></th>
+		<th><?php echo __('Modified'); ?></th>
+		<th class="actions"><?php echo __('Actions'); ?></th>
+	</tr>
+	<?php foreach ($user['Notification'] as $notification): ?>
+		<tr>
+			<td><?php echo $notification['id']; ?></td>
+			<td><?php echo $notification['user_id']; ?></td>
+			<td><?php echo $notification['title']; ?></td>
+			<td><?php echo $notification['body']; ?></td>
+			<td><?php echo $notification['notification_type']; ?></td>
+			<td><?php echo $notification['is_read']; ?></td>
+			<td><?php echo $notification['created']; ?></td>
+			<td><?php echo $notification['modified']; ?></td>
+			<td class="actions">
+				<?php echo $this->Html->link(__('View'), array('controller' => 'notifications', 'action' => 'view', $notification['id'])); ?>
+				<?php echo $this->Html->link(__('Edit'), array('controller' => 'notifications', 'action' => 'edit', $notification['id'])); ?>
+				<?php echo $this->Form->postLink(__('Delete'), array('controller' => 'notifications', 'action' => 'delete', $notification['id']), null, __('Are you sure you want to delete # %s?', $notification['id'])); ?>
+			</td>
+		</tr>
+	<?php endforeach; ?>
+	</table>
+<?php endif; ?>
+
+	<div class="actions">
+		<ul>
+			<li><?php echo $this->Html->link(__('New Notification'), array('controller' => 'notifications', 'action' => 'add')); ?> </li>
+		</ul>
+	</div>
+</div>
+<div class="related">
+	<h3><?php echo __('Related Pictures'); ?></h3>
+	<?php if (!empty($user['Picture'])): ?>
+	<table cellpadding = "0" cellspacing = "0">
+	<tr>
+		<th><?php echo __('Id'); ?></th>
+		<th><?php echo __('User Id'); ?></th>
+		<th><?php echo __('Image'); ?></th>
+		<th><?php echo __('Created'); ?></th>
+		<th><?php echo __('Modified'); ?></th>
+		<th class="actions"><?php echo __('Actions'); ?></th>
+	</tr>
+	<?php foreach ($user['Picture'] as $picture): ?>
+		<tr>
+			<td><?php echo $picture['id']; ?></td>
+			<td><?php echo $picture['user_id']; ?></td>
+			<td><?php echo $picture['image']; ?></td>
+			<td><?php echo $picture['created']; ?></td>
+			<td><?php echo $picture['modified']; ?></td>
+			<td class="actions">
+				<?php echo $this->Html->link(__('View'), array('controller' => 'pictures', 'action' => 'view', $picture['id'])); ?>
+				<?php echo $this->Html->link(__('Edit'), array('controller' => 'pictures', 'action' => 'edit', $picture['id'])); ?>
+				<?php echo $this->Form->postLink(__('Delete'), array('controller' => 'pictures', 'action' => 'delete', $picture['id']), null, __('Are you sure you want to delete # %s?', $picture['id'])); ?>
+			</td>
+		</tr>
+	<?php endforeach; ?>
+	</table>
+<?php endif; ?>
+
+	<div class="actions">
+		<ul>
+			<li><?php echo $this->Html->link(__('New Picture'), array('controller' => 'pictures', 'action' => 'add')); ?> </li>
+		</ul>
+	</div>
+</div>
+<div class="related">
+	<h3><?php echo __('Related Transactions'); ?></h3>
+	<?php if (!empty($user['Transaction'])): ?>
+	<table cellpadding = "0" cellspacing = "0">
+	<tr>
+		<th><?php echo __('Id'); ?></th>
+		<th><?php echo __('User Id'); ?></th>
+		<th><?php echo __('Itunes Product'); ?></th>
+		<th><?php echo __('Itunes Price'); ?></th>
+		<th><?php echo __('Android Product'); ?></th>
+		<th><?php echo __('Android Price'); ?></th>
+		<th><?php echo __('Creadit'); ?></th>
+		<th><?php echo __('Amount'); ?></th>
+		<th><?php echo __('Description'); ?></th>
+		<th><?php echo __('Time Stamp'); ?></th>
+		<th><?php echo __('Created'); ?></th>
+		<th><?php echo __('Modified'); ?></th>
+		<th class="actions"><?php echo __('Actions'); ?></th>
+	</tr>
+	<?php foreach ($user['Transaction'] as $transaction): ?>
+		<tr>
+			<td><?php echo $transaction['id']; ?></td>
+			<td><?php echo $transaction['user_id']; ?></td>
+			<td><?php echo $transaction['itunes_product']; ?></td>
+			<td><?php echo $transaction['itunes_price']; ?></td>
+			<td><?php echo $transaction['android_product']; ?></td>
+			<td><?php echo $transaction['android_price']; ?></td>
+			<td><?php echo $transaction['creadit']; ?></td>
+			<td><?php echo $transaction['amount']; ?></td>
+			<td><?php echo $transaction['description']; ?></td>
+			<td><?php echo $transaction['time_stamp']; ?></td>
+			<td><?php echo $transaction['created']; ?></td>
+			<td><?php echo $transaction['modified']; ?></td>
+			<td class="actions">
+				<?php echo $this->Html->link(__('View'), array('controller' => 'transactions', 'action' => 'view', $transaction['id'])); ?>
+				<?php echo $this->Html->link(__('Edit'), array('controller' => 'transactions', 'action' => 'edit', $transaction['id'])); ?>
+				<?php echo $this->Form->postLink(__('Delete'), array('controller' => 'transactions', 'action' => 'delete', $transaction['id']), null, __('Are you sure you want to delete # %s?', $transaction['id'])); ?>
+			</td>
+		</tr>
+	<?php endforeach; ?>
+	</table>
+<?php endif; ?>
+
+	<div class="actions">
+		<ul>
+			<li><?php echo $this->Html->link(__('New Transaction'), array('controller' => 'transactions', 'action' => 'add')); ?> </li>
+		</ul>
+	</div>
+</div>

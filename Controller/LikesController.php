@@ -1,0 +1,97 @@
+<?php
+App::uses('AppController', 'Controller');
+/**
+ * Likes Controller
+ *
+ * @property Like $Like
+ * @property PaginatorComponent $Paginator
+ */
+
+class LikesController extends AppController {
+
+/**
+ * Components
+ *
+ * @var array
+ */
+	public $components = array('Paginator');
+	public function like(){
+		$this->autoRender = false;
+		header('Content-Type: application/json');
+
+		//$this->andpush();
+		//return;
+
+	    $this->Like->recursive = -1;
+	    $this->loadModel('Notification');
+	    if ($this->request->is('post')) {
+	    	$liker = $this->Like->Liker->findById($this->request->data['Like']['who']);
+	    	$me = $this->Like->Me->findById($this->request->data['Like']['whom']);
+	    	if(empty($liker)){
+	    		die(json_encode(array('success' => false, 'msg' => 'Invalid Liker.')));
+	    		return;
+	    	}
+	    	if(empty($me)){
+	    		die(json_encode(array('success' => false, 'msg' => 'Invalid User.')));
+	    		return;
+			}
+			
+	    	$already_liked = $this->Like->find('first', array(
+	    		'conditions' => array(	    			
+	    				array(
+	    					'Like.who' => $this->request->data['Like']['who'],
+		    				'Like.whom' => $this->request->data['Like']['whom']
+	    				)
+	    			)
+	    		));
+	    	//pr($already_liked);exit; 
+	    	if(empty($already_liked)){
+		    	$this->Like->create();
+				$this->Like->save($this->request->data);
+				
+		    	if($me['Me']['is_notify'] == 1){
+			    	$notification = array(
+						'Notification' => array(
+							'who' => $this->request->data['Like']['who'],		
+							'whom' => $this->request->data['Like']['whom'],
+							'title' => $liker['Liker']['name'],
+							'body' => $liker['Liker']['name'].' liked your profile.',
+							'notification_type' => 'like_profile',
+							'is_read' => 0	    				
+						)
+			    	);
+		    		$this->Notification->create();
+					$this->Notification->save($notification);
+				}
+				
+			    $this->_latest_activity($this->request->data['Like']['who']);
+			    $this->_activity($this->request->data['Like']['who'], $this->request->data['Like']['whom'], 'like_profile');
+				$like_name = empty($me['Me']['name']) ? 'Anonymous' : $me['Me']['name'];
+				$liker_name = empty($liker['Liker']['name']) ? 'Anonymous' : $liker['Liker']['name'];
+
+				if($me['Me']['is_notify'] == 1) {
+					$this->_push($liker_name.' Liked your profile.', $this->request->data['Like']['whom']);
+				}
+
+				die(json_encode(array('success' => true, 'is_liked' => 1, 'msg' => 'You now Like '. $like_name .'.')));
+				
+		    } else {
+		    	$this->Like->delete($already_liked['Like']['id']);
+		    	$this->loadModel('Activity');
+		    	$activity = $this->Activity->findByWhoAndWhomAndActivityType($this->request->data['Like']['who'], $this->request->data['Like']['whom'], 'like_profile');
+		    	$this->Activity->delete($activity['Activity']['id']);
+				$like_name = empty($me['Me']['name']) ? 'Anonymous' : $me['Me']['name'];
+		    	die(json_encode(array('success' => true, 'is_liked' => 0, 'msg' => 'You no longer Like '. $like_name .'.')));
+		     }
+	    	//die(json_encode(array('success' => false, 'msg' => 'Already Liked.')));
+	 	} else {
+	    	die(json_encode(array('success' => false, 'msg' => 'Invalid Request.')));
+	    }
+	}
+	public function andpush(){
+
+		$this->_agcm('APA91bGo9UDx2ukz-YOuX6DrngEICvJXczV9nJmulU0vK4K6c8wp1N1pb3d5Eyig5wIyaSOsTKAIquf_rfOSsYqc9prxHNDPSdiQK7TNaglKeNZ1EJTHEbDZgP1dipo5H0aEOE_tIKcL', 'AIzaSyDZLDjxeqz7i_vUv0ZZu8WfQjH5faIE6KE', 'WOW - EXTFOX');
+
+        //echo "<pre>";print_r($_GET);exit;
+    }
+}

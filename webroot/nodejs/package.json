@@ -1,0 +1,12 @@
+{
+  "name": "dicu-chat",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "express": "^4.16.4",
+    "log-to-file": "^1.2.2",
+    "mongodb": "^3.1.6",
+    "socket.io": "^2.1.1",
+    "socket.io-client": "^2.1.1"
+  }
+}

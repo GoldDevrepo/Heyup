@@ -1,0 +1,53 @@
+K 25
+svn:wc:ra_dav:version-url
+V 39
+/svn/!svn/ver/2051/dicu/app/View/Blocks
+END
+view.ctp
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/!svn/ver/2051/dicu/app/View/Blocks/view.ctp
+END
+admin_edit.ctp
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/!svn/ver/2051/dicu/app/View/Blocks/admin_edit.ctp
+END
+admin_index.ctp
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/!svn/ver/2051/dicu/app/View/Blocks/admin_index.ctp
+END
+admin_add.ctp
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svn/!svn/ver/2051/dicu/app/View/Blocks/admin_add.ctp
+END
+admin_view.ctp
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/!svn/ver/2051/dicu/app/View/Blocks/admin_view.ctp
+END
+edit.ctp
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/!svn/ver/2051/dicu/app/View/Blocks/edit.ctp
+END
+index.ctp
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/!svn/ver/2051/dicu/app/View/Blocks/index.ctp
+END
+add.ctp
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/!svn/ver/2051/dicu/app/View/Blocks/add.ctp
+END

@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/!svn/ver/2051/dicu/app/webroot/files/push_certificate
+END
+ck_production.pem
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/!svn/ver/2051/dicu/app/webroot/files/push_certificate/ck_production.pem
+END
+ck_dev.pem
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/!svn/ver/2051/dicu/app/webroot/files/push_certificate/ck_dev.pem
+END

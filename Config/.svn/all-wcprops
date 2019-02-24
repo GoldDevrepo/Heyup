@@ -1,0 +1,53 @@
+K 25
+svn:wc:ra_dav:version-url
+V 34
+/svn/!svn/ver/2051/dicu/app/Config
+END
+email.php.default
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/svn/!svn/ver/2051/dicu/app/Config/email.php.default
+END
+acl.ini.php
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/!svn/ver/2051/dicu/app/Config/acl.ini.php
+END
+bootstrap.php
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/!svn/ver/2051/dicu/app/Config/bootstrap.php
+END
+acl.php
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/svn/!svn/ver/2051/dicu/app/Config/acl.php
+END
+routes.php
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svn/!svn/ver/2051/dicu/app/Config/routes.php
+END
+database.php
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/!svn/ver/2051/dicu/app/Config/database.php
+END
+database.php.default
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/!svn/ver/2051/dicu/app/Config/database.php.default
+END
+core.php
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/svn/!svn/ver/2051/dicu/app/Config/core.php
+END

@@ -1,0 +1,74 @@
+<?php
+
+header('Content-Type: application/json');
+
+print_r($chat_validity);
+exit;
+//print_r($mongo_message_lists);
+//exit;
+$chat_obj = array();
+foreach ($chat_validity as $key => $chat) {
+    //print_r($chat);
+    $monog_chat_id = $chat['Chat']['id'];
+//    print_r($monog_chat_id);
+//    print_r($mongo_message_lists);
+   $chat_obj[] = Set::extract("/MongoMessage[chat_id=$monog_chat_id]/..", $mongo_message_lists);
+		
+    print_r($chat_obj);
+    $chat_validity[$key]['Message']['message'] = $chat_obj[$key][0]['MongoMessage']['last_message'];
+    $chat_validity[$key]['Chat']['count'] = $chat_obj[$key][0]['MongoMessage']['count'];
+    $chat_validity[$key]['Message']['sender'] = $chat_obj[$key][0]['MongoMessage']['sender'];
+    $chat_validity[$key]['Message']['has_image'] = $chat_obj[$key][0]['MongoMessage']['has_image'];
+    $chat_validity[$key]['Message']['receiver'] = $chat_obj[$key][0]['MongoMessage']['receiver'];
+    $chat_validity[$key]['Message']['chat_id'] = $chat_obj[$key][0]['MongoMessage']['chat_id'];
+    //$chat_validity[$key]['Message']['created_at'] = $chat_obj[$key][0]['MongoMessage']['created_at'];
+    $chat_validity[$key]['Message']['created_at'] = date('Y-m-d H:i:s', $chat_obj[$key][0]['MongoMessage']['time']);
+    $chat_validity[$key]['Chat']['chat_id'] = $chat_validity[$key]['Chat']['id'];
+    if (!empty($chat_validity[$key]['Receiver']['profile_img'])) {
+        $chat_validity[$key]['Receiver']['profile_img'] = $this->Html->url('/files/images/round_images/' . $chat_validity[$key]['Receiver']['profile_img'], true);
+    }
+    if (empty($chat_validity[$key]['Sender']['name']))
+        $chat_validity[$key]['Sender']['name'] = 'Anonymous';
+    if (empty($chat_validity[$key]['Receiver']['name']))
+        $chat_validity[$key]['Receiver']['name'] = 'Anonymous';
+    if (!empty($chat_validity[$key]['Sender']['profile_img'])) {
+        $chat_validity[$key]['Sender']['profile_img'] = $this->Html->url('/files/images/round_images/' . $chat_validity[$key]['Sender']['profile_img'], true);
+    }
+    if ($chat_validity[$key]['Friend']['is_accepted'] == 1) {
+        $chat_validity[$key]['Chat']['is_friend'] = true;
+    } else {
+        $chat_validity[$key]['Chat']['is_friend'] = false;
+    }
+    if ($chat_validity[$key]['Sender']['id'] == $me) {
+        $chat_validity[$key]['Me'] = $chat_validity[$key]['Sender'];
+        $chat_validity[$key]['User'] = $chat_validity[$key]['Receiver'];
+    } else {
+        $chat_validity[$key]['User'] = $chat_validity[$key]['Sender'];
+        $chat_validity[$key]['Me'] = $chat_validity[$key]['Receiver'];
+    }
+    //$chat_validity[$key]['Message'] = $chat_validity[$key]['Message'][$key];
+    //$chat_validity[$key]['Message'] = array_pop($chat_validity[$key]['Message']);
+
+    unset($chat_validity[$key]['Sender'], $chat_validity[$key]['Receiver'], $chat_validity[$key]['Me'], $chat_validity[$key]['Friend'], $chat_validity[$key]['Chat']['id'], $chat_validity[$key]['User']['dob'], $chat_validity[$key]['User']['password'], $chat_validity[$key]['User']['is_login'], $chat_validity[$key]['User']['lat'], $chat_validity[$key]['User']['lng'], $chat_validity[$key]['User']['hair_color'], $chat_validity[$key]['User']['tagline'], $chat_validity[$key]['User']['about_me'], $chat_validity[$key]['User']['gender'], $chat_validity[$key]['User']['email'], $chat_validity[$key]['User']['mobile_no'], $chat_validity[$key]['User']['latest_activity'], $chat_validity[$key]['User']['is_message'], $chat_validity[$key]['User']['is_notify'], $chat_validity[$key]['User']['is_friend_request'], $chat_validity[$key]['User']['search_type'], $chat_validity[$key]['User']['sound'], $chat_validity[$key]['User']['created'], $chat_validity[$key]['User']['modified'], $chat_validity[$key]['User']['lives_in'], $chat_validity[$key]['User']['looking_for'], $chat_validity[$key]['User']['ethnicity'], $chat_validity[$key]['User']['relationship'], $chat_validity[$key]['User']['height_ft'], $chat_validity[$key]['User']['height_inch']);
+
+    $chat_validity[$key]['Chat']['time'] = $chat_validity[$key]['Message']['created_at'];
+//                print_r($chat_validity[$key]['Chat']);
+    if (empty($chat_validity[$key]['Message']['message'])) {
+//			print_r($chat_validity[$key]['Message']);
+        if (!empty($chat_validity[$key]['Message']['has_image'])) {
+            $chat_validity[$key]['Chat']['time'] = $chat_validity[$key]['Message']['created_at'];
+        } else
+            $chat_validity[$key]['Chat']['time'] = $chat_validity[$key]['Chat']['created'];
+        unset($chat_validity[$key]['Message']);
+    }
+    if (!empty($some)) {
+        if (empty($chat_validity[$key]['Message']['message'])) {
+//                            print_r($chat_validity[$key]['Message']);
+            unset($chat_validity[$key]);
+        }
+    }
+}
+$chat_validity = Set::sort($chat_validity, '{n}.Chat.time', 'DESC');
+echo json_encode(array('success' => true, 'message_list' => $message_lists));
+exit;
+?>
